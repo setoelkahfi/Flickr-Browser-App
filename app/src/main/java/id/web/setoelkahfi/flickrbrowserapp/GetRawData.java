@@ -1,7 +1,6 @@
 package id.web.setoelkahfi.flickrbrowserapp;
 
 import android.os.AsyncTask;
-import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -10,7 +9,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * Created by Eldin on 1/22/2016.
@@ -42,6 +40,10 @@ public class GetRawData {
 
     public DownloadStatus getmDownloadStatus() {
         return mDownloadStatus;
+    }
+
+    public void setmRawURL(String mRawURL) {
+        this.mRawURL = mRawURL;
     }
 
     public void execute() {
@@ -87,14 +89,14 @@ public class GetRawData {
                     return null;
                 }
 
-                StringBuffer buffer = new StringBuffer();
+                StringBuilder buffer = new StringBuilder();
 
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
                 String line;
 
                 while ((line = bufferedReader.readLine()) != null) {
-                    buffer.append(line + "\n");
+                    buffer.append(line).append("\n");
                 }
 
                 return buffer.toString();
