@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -24,8 +25,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        ProcessPhotos processPhotos = new ProcessPhotos("iphone, iphone6, apple", true);
+        processPhotos.execute();
+
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -37,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 //        GetRawData theRawData = new GetRawData("https://api.flickr.com/services/feeds/photos_public.gne?tags=android,lollipop&format=json&nojsoncallback=1");
-        GetFlickrJsonData jsonData = new GetFlickrJsonData("iphone", true);
-        jsonData.execute();
+//        GetFlickrJsonData jsonData = new GetFlickrJsonData("iphone", true);
+//        jsonData.execute();
     }
 
     @Override
@@ -79,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
             protected void onPostExecute(String webData) {
                 super.onPostExecute(webData);
-                flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(MainActivity.this, getmPhotos());
+                flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(getmPhotos(), MainActivity.this);
                 recyclerView.setAdapter(flickrRecyclerViewAdapter);
             }
 
